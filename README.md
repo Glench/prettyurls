@@ -11,6 +11,6 @@ So they made "pretty URLs" that looked more like this:
 
 It's been a decade since then and URLs haven't gotten any prettier. Until now:
 
-`http://ec2-54-145-181-144.compute-1.amazonaws.com:8000/🌠🌻🌏🌹`
+`https://prettyurls.neocities.org/🌠🌻🌏🌹`
 
 [Pretty URL Shortener](http://prettyurls.neocities.org) will give you emoji URLs using all the prettiest, hand-chosen emoji.

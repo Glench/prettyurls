@@ -14,7 +14,7 @@ def index():
 
     <body style="font-family: Helvetica, Arial, sans-serif;">
         <h1>Pretty URLs ✨</h1>
-	<p>A url shortener that makes <a href="https://en.wikipedia.org/wiki/Semantic_URL">pretty emoji URLs</a>.</p>
+	<p>A url shortener that makes <a href="https://en.wikipedia.org/wiki/Semantic_URL">pretty emoji URLs</a>. (<a href="https://github.com/Glench/prettyurls">Github</a>)</p>
         <form action="/new_url" method="post">
             url: <input style="font-size: 20px; padding: 8px;" type="text" name="url" placeholder="e.g. http://glench.com" />
 <button type="submit">Get pretty url</button>
@@ -95,7 +95,7 @@ new_url_template = u"""
 		Pretty URL: <input type="text" style="padding: 8px; font-size: 20px;" value={url} size={size} />
 		<script>
 			var input = document.querySelector('input');
-			input.setAttribute('value', window.location.origin+'/'+input.getAttribute('value'));
+			input.setAttribute('value', 'https://prettyurls.neocities.org'+'/'+input.getAttribute('value'));
 			input.setAttribute('size', input.getAttribute('value').length);
 			input.select();
 		</script>
