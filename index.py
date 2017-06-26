@@ -7,14 +7,17 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return """
+    return u"""
 <html>
     <head>
     </head>
 
-    <body>
+    <body style="font-family: Helvetica, Arial, sans-serif;">
+        <h1>Pretty URLs ✨</h1>
+	<p>A url shortener that makes <a href="https://en.wikipedia.org/wiki/Semantic_URL">pretty emoji URLs</a>.</p>
         <form action="/new_url" method="post">
-            url: <input type="text" name="url" placeholder="e.g. http://glench.com" />
+            url: <input style="font-size: 20px; padding: 8px;" type="text" name="url" placeholder="e.g. http://glench.com" />
+<button type="submit">Get pretty url</button>
         </form>
     </body>
 </html>
@@ -83,6 +86,23 @@ import random
 def generate_hash(length=4):
     return u''.join(random.sample(emoji, length))
 
+new_url_template = u"""
+<html>
+	<head>
+	</head>
+
+	<body style="font-family: Helvetica, Arial, sans-serif;">
+		Pretty URL: <input type="text" style="padding: 8px; font-size: 20px;" value={url} size={size} />
+		<script>
+			var input = document.querySelector('input');
+			input.setAttribute('value', window.location.origin+'/'+input.getAttribute('value'));
+			input.setAttribute('size', input.getAttribute('value').length);
+			input.select();
+		</script>
+	</body>
+</html>
+"""
+
 @app.route('/new_url', methods=['POST'])
 def new_url():
     parsed_url = urlparse(request.form['url'])
@@ -91,7 +111,7 @@ def new_url():
         # if there's already a hash for this URL
         for hash, url in all_hashes.iteritems():
             if request.form['url'] == url:
-                return hash
+                return new_url_template.format(url=hash, size=len(hash))
 
         # otherwise, generate a new hash
         new_hash = generate_hash()
@@ -103,10 +123,9 @@ def new_url():
         all_hashes[new_hash] = request.form['url']
         pickle.dump(all_hashes, open('db.pickle', 'wb'))
 
-        return url_for('/{}'.format(new_hash), _external=True)
-
+	return new_url_template.format(url=new_hash, size=len(new_hash))
     else:
-        return 'bad url, buddy'
+        return 'please submit a valid url'
 
 @app.route('/<hash>', methods=['GET'])
 def forward_url(hash):
